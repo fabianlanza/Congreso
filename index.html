@@ -2,19 +2,22 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>
-   Congreso
-  </title>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
+  <title>Congreso</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <style>
   html {
     scroll-behavior: smooth;
   }
   </style>
+
  </head>
  <body class="bg-blue-900 text-white">
+
+    
   <header class="bg-blue-900">
    <div class="container mx-auto flex justify-between items-center py-4 px-6">
     <img alt="UNICAH logo" class="h-10" height="50" src="https://storage.googleapis.com/a1aa/image/UhkiXx4b4lnnM2_yBtb96ZUn2aXo3vC33gY4zb2mkD8.jpg" width="50"/>
@@ -149,7 +152,7 @@
   <section id="Inscripcion" class="bg-blue-900 text-white py-12">
     <div class="container mx-auto px-6">
       <h2 class="text-3xl font-bold text-center mb-6">Inscripción</h2>
-      <form class="bg-white text-blue-900 p-6 rounded-lg shadow-lg max-w-lg mx-auto">
+      <form class="bg-white text-blue-900 p-6 rounded-lg shadow-lg max-w-lg mx-auto" action="procesar_inscripcion.php" method="post">
         <div class="mb-4">
           <label for="nombre" class="block font-semibold">Nombre</label>
           <input type="text" id="nombre" name="nombre" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
@@ -160,7 +163,7 @@
         </div>
         <div class="mb-4">
           <label for="correo" class="block font-semibold">Correo Electrónico</label>
-          <input type="email" id="correo" name="correo" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          <input type="email" id="correo" name="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
         </div>
         <div class="mb-4">
           <label for="telefono" class="block font-semibold">Número Telefónico</label>
@@ -171,6 +174,35 @@
     </div>
   </section>
 
+
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("success")) {
+            Swal.fire({
+                icon: "success",
+                title: "¡Inscripción exitosa!",
+                text: "Revisa tu correo para más detalles.",
+                confirmButtonText: "Aceptar"
+            }).then(() => {
+                window.location.href = "index.html"; // Recarga la página limpiando la URL
+            });
+        }
+
+        if (urlParams.has("error")) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: urlParams.get("error"),
+                confirmButtonText: "Intentar de nuevo"
+            }).then(() => {
+                window.location.href = "index.html"; // Recarga la página limpiando la URL
+            });
+        }
+    });
+</script>
 
  </body>
 </html>
