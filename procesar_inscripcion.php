@@ -33,10 +33,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->Port = 587;
 
         // Configurar el correo
-        $mail->setFrom('pruebacorreos22897@gmail.com', 'Congreso Tech 2025');
+        $mail->setFrom('pruebacorreos22897@gmail.com', 'Congreso 2025');
         $mail->addAddress($email, $nombre);
         $mail->isHTML(true);
-        $mail->Subject = 'Confirmacion de inscripcion - Congreso Tech 2025';
+        $mail->Subject = 'Confirmacion de inscripcion - Congreso 2025';
         $mail->Body = "<h3>Hola $nombre,</h3>
                       <p>Gracias por inscribirte en nuestro congreso.</p>
                       <p><strong>Detalles:</strong></p>
@@ -48,6 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       <p>Nos vemos pronto!</p>";
 
         $mail->send();
+
+        // Redirigir a la página con un mensaje de éxito para SweetAlert
         header("Location: index.html?success=1");
         // echo "Inscripción exitosa. Revisa tu correo.";
     } catch (Exception $e) {
