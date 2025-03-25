@@ -57,7 +57,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Redirigir a la página con un mensaje de éxito para SweetAlert
         header("Location: index.html?success=1");
-        // echo "Inscripción exitosa. Revisa tu correo.";
+        
+    } catch (PDOException $e) {
+        // Verificar si el error es por email duplicado (código SQLSTATE 23000)
+        if ($e->getCode() == 23000) {
+            // Redirigir a index con un mensaje de error más amigable
+            header("Location: index.html?error=email_existente");
+        } else {
+            // Registrar el error en un archivo de log para debugging
+            error_log("Error en inscripción: " . $e->getMessage());
+            header("Location: index.html?error=1");
+        }
     } catch (Exception $e) {
         // echo "Error: " . $e->getMessage();
         error_log("Error en inscripcion: " . $e->getMessage());

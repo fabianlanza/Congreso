@@ -187,6 +187,7 @@
   <script>
     document.addEventListener("DOMContentLoaded", function() {
         const urlParams = new URLSearchParams(window.location.search);
+        // Mensaje de éxito
         if (urlParams.has("success")) {
             Swal.fire({
                 icon: "success",
@@ -198,15 +199,25 @@
             });
         }
 
+        // Mensaje de error general
         if (urlParams.has("error")) {
-            Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: urlParams.get("error"),
-                confirmButtonText: "Intentar de nuevo"
-            }).then(() => {
-                window.location.href = "index.html"; // Recarga la página limpiando la URL
-            });
+            const errorType = urlParams.get("error");
+
+            if (errorType === "email_existente") {
+                Swal.fire({
+                    icon: "error",
+                    title: "Correo ya registrado",
+                    text: "Este correo electrónico ya está registrado. Por favor, usa otro.",
+                    confirmButtonText: "Intentar con otro correo"
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Hubo un error al procesar tu inscripción. Intenta nuevamente.",
+                    confirmButtonText: "Intentar de nuevo"
+                });
+            }
         }
     });
 </script>
